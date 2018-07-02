@@ -1,0 +1,4 @@
+server:
+  port: 8090
+tesseract:
+  data-path: D:\tesseract\Tesseract-OCR\tessdata
