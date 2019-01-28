@@ -2,3 +2,5 @@ server:
   port: 8090
 tesseract:
   data-path: D:\tesseract\Tesseract-OCR\tessdata
+logging:
+  config: classpath:logback-spring.xml

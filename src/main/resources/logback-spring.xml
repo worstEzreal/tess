@@ -1,0 +1,54 @@
+<configuration scan="true" scanPeriod="30 seconds" packagingData="true">
+
+    <property name="logPath" value="/log/Tess/"/>
+    <property name="logProfile" value="dev"/>
+
+    <appender name="stdoutAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %thread [%level] %logger:%line %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 日志输出 -->
+    <appender name="tessAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/tess.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/tess.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- 保留 30 天 -->
+            <maxHistory>30</maxHistory>
+
+            <!-- 每个日志文件最大 1G -->
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1GB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %thread [%level] %logger:%line %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <if condition='property("logProfile").equals("prod")'>
+        <then>
+            <logger name="com.worstEzreal.tess" level="DEBUG" additivity="false">
+                <appender-ref ref="tessAppender"/>
+            </logger>
+
+            <root level="INFO">
+                <appender-ref ref="tessAppender"/>
+            </root>
+        </then>
+        <else>
+            <logger name="com.worstEzreal.tess" level="DEBUG" additivity="false">
+                <appender-ref ref="stdoutAppender"/>
+            </logger>
+
+            <root level="INFO">
+                <appender-ref ref="stdoutAppender"/>
+            </root>
+        </else>
+    </if>
+
+</configuration>
