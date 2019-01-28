@@ -3,7 +3,7 @@ buildscript {
         springBootVersion = '1.5.8.RELEASE'
     }
     repositories {
-        mavenCentral()
+        maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     }
     dependencies {
